@@ -1,6 +1,10 @@
 import snowflake.connector
 import os
 import csv
+import logging
+
+# Configure the logger
+logging.basicConfig(filename='my_log.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Snowflake connection parameters
 account = 'ita05443.us-east-1'
@@ -25,13 +29,13 @@ conn = snowflake.connector.connect(
     port=443
 )
 
-print('Starting pull')
+logging.info('Starting pull')
 
 try:
     f = open('query.sql', 'r')
     query = f.read()
     if query is None:
-        print("Query file not found.")
+        logging.info("Query file not found.")
         exit(1)
     with open('out.csv', 'w', newline='') as file:
         writer = csv.writer(file)
@@ -42,14 +46,14 @@ try:
             # Execute a simple query
             cur = conn.cursor()
             try:
-                print('Running query for patient {patient_count}'.format(patient_count=patient_count))
+                logging.info('Running query for patient {patient_count}'.format(patient_count=patient_count))
                 cur.execute(query, [patient_count])
                 results = cur.fetchall()
                 num_results = len(results)
-                print('Patient {patient_count}, found {num_results}'.format(patient_count=patient_count, num_results=num_results))
+                logging.info('Patient {patient_count}, found {num_results}'.format(patient_count=patient_count, num_results=num_results))
                 writer.writerows(results)
             except:
-                print("Error on patient " + patient_count)
+                logging.info("Error on patient " + patient_count)
             finally:
                 # Close the cursor and connection
                 cur.close()
