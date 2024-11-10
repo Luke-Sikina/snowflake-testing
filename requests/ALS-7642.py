@@ -48,7 +48,8 @@ try:
                 num_results = len(results)
                 print('Patient {patient_count}, found {num_results}'.format(patient_count=patient_count, num_results=num_results))
                 writer.writerows(results)
-                
+            except:
+                print("Error on patient " + patient_count)
             finally:
                 # Close the cursor and connection
                 cur.close()
