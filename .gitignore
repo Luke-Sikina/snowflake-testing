@@ -4,3 +4,5 @@ keys/*
 .vscode
 scripts/*patients.txt
 scripts/*.csv
+scripts/*.log
+
