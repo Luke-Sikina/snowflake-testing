@@ -3,6 +3,9 @@ import os
 import csv
 import logging
 
+def split_into_sublists(lst, n):
+    return [lst[i:i + n] for i in range(0, len(lst), n)]
+
 # Configure the logger
 logging.basicConfig(filename='my_log.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -32,31 +35,35 @@ conn = snowflake.connector.connect(
 logging.info('Starting pull')
 
 try:
-    f = open('ALS-7642.sql', 'r')
+    f = open('ALS-7515.sql', 'r')
     query = f.read()
+    patient_ids = open('ALS-7515-patients.txt').read()
+    patient_ids = patient_ids.split('\n')
+    patient_ids = split_into_sublists(patient_ids, 10)
+
+
     if query is None:
         logging.info("Query file not found.")
         exit(1)
-    with open('out.csv', 'w', newline='') as file:
+    with open('ALS-7515.csv', 'w', newline='') as file:
         writer = csv.writer(file)
-
         num_results = -1
         patient_count = 0
-        while num_results != 0:
-            # Execute a simple query
+
+        for patient_group in patient_ids:
             cur = conn.cursor()
             try:
                 logging.info('Running query for patient {patient_count}'.format(patient_count=patient_count))
-                cur.execute(query, [patient_count])
+                cur.execute(query, [patient_group])
                 results = cur.fetchmany(1000)
                 num_results = 0
                 while len(results) > 0:
                     writer.writerows(results)
                     results = cur.fetchmany(1000)
                     num_results = num_results + len(results)
-                logging.info('1000 patients starting at {patient_count}, found {num_results}'.format(patient_count=patient_count, num_results=num_results))
+                logging.info('Found {num_results}'.format(num_results=num_results))
             except:
-                logging.info("Error on patient " + patient_count)
+                logging.info("Error on patient {p}".format(p=patient_count))
             finally:
                 # Close the cursor and connection
                 cur.close()
@@ -64,3 +71,5 @@ try:
 
 finally:
     conn.close()
+
+
