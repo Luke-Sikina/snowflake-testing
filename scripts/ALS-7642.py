@@ -60,7 +60,7 @@ try:
             finally:
                 # Close the cursor and connection
                 cur.close()
-                patient_count = patient_count + 1
+                patient_count = patient_count + 1000
 
 finally:
     conn.close()
