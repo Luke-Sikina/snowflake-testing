@@ -4,7 +4,7 @@ import csv
 import logging
 
 # Configure the logger
-logging.basicConfig(filename='my_log.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='my_log.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Snowflake connection parameters
 account = 'ita05443.us-east-1'
@@ -48,10 +48,13 @@ try:
             try:
                 logging.info('Running query for patient {patient_count}'.format(patient_count=patient_count))
                 cur.execute(query, [patient_count])
-                results = cur.fetchall()
-                num_results = len(results)
-                logging.info('Patient {patient_count}, found {num_results}'.format(patient_count=patient_count, num_results=num_results))
-                writer.writerows(results)
+                results = cur.fetchmany(1000)
+                num_results = 0
+                while len(results) > 0:
+                    writer.writerows(results)
+                    results = cur.fetchmany(1000)
+                    num_results = num_results + len(results)
+                logging.info('1000 patients starting at {patient_count}, found {num_results}'.format(patient_count=patient_count, num_results=num_results))
             except:
                 logging.info("Error on patient " + patient_count)
             finally:
