@@ -19,6 +19,6 @@ with open('ALS-7642.csv', 'w', newline='') as file:
         csv_reader = csv.reader(file)
         for cells in csv_reader:
             if cells[0] in patient_nums_to_omit:
-                logging.info("Ommitting line for patient {p}", p=cells[0])
+                logging.info("Ommitting line for patient %s", cells[0])
             else:
                 writer.writerow(cells)
