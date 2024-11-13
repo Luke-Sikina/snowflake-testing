@@ -39,7 +39,7 @@ try:
     query = f.read()
     patient_ids = open('ALS-7515-patients.txt').read()
     patient_ids = patient_ids.split('\n')
-    patient_ids = split_into_sublists(patient_ids, 10)
+    patient_ids = split_into_sublists(patient_ids, 100)
 
 
     if query is None:
@@ -67,7 +67,7 @@ try:
             finally:
                 # Close the cursor and connection
                 cur.close()
-                patient_count = patient_count + 1000
+                patient_count = patient_count + 100
 
 finally:
     conn.close()

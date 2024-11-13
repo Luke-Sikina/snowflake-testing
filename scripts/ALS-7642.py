@@ -4,7 +4,7 @@ import csv
 import logging
 
 # Configure the logger
-logging.basicConfig(filename='my_log.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='ALS-7642.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Snowflake connection parameters
 account = 'ita05443.us-east-1'
@@ -41,7 +41,7 @@ try:
         writer = csv.writer(file)
 
         num_results = -1
-        patient_count = 0
+        patient_count = 61000
         while num_results != 0:
             # Execute a simple query
             cur = conn.cursor()
