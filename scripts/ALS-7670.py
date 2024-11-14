@@ -1,4 +1,5 @@
 # Take all the patient UUIDs and translate them into patient nums
+import snowflake.connector
 import logging
 import os
 import csv
