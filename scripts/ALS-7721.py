@@ -21,9 +21,9 @@ with open('ALS-7721.csv', 'w') as out:
     with open('../../UUID_mapping_07Jan2024.csv') as mapping:
         for row in mapping:
             cells = row.split('|')
-            if len(cells) == 4 and cells[2] in patients:
+            if len(cells) == 4 and cells[1] in patients:
                 logging.info('Patient added')
-                writer.writerow([cells[2], cells[3]])
+                writer.writerow([cells[1], cells[2]])
             elif len(cells) != 4:
                 logging.info('Bad row: %s', row)
             else:
