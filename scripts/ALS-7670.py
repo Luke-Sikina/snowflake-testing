@@ -45,16 +45,19 @@ conn = snowflake.connector.connect(
 f = open('ALS-7670.sql', 'r')
 query = f.read()
 
+logging.info('Running query')
 with open('ALS-7670.csv', 'w', newline='') as file:
     try:
         cur = conn.cursor()
         cur.execute(query, [patients.values()])
         results = cur.fetchmany(1000)
+        logging.info('Writing results')
         while len(results) > 0:
             for row in results:
                 row = row.append(patients[row[0]])
                 file.write(row)
     finally:
         conn.close()
-# Run query
+
+logging.info('Done')
 
