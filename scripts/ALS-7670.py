@@ -63,7 +63,8 @@ with open('ALS-7670.csv', 'w', newline='') as file:
         logging.info('Writing results')
         while len(results) > 0:
             for row in results:
-                row = row.append(patients[row[0]])
+                csv_row = [patients[row[0]]]
+                row = csv_row.append(row)
                 writer.write(row)
     finally:
         conn.close()
