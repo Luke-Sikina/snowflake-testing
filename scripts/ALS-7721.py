@@ -9,6 +9,7 @@ patients = set()
 logging.info('Finding unique patients...')
 with open('../../bch_phenotypic_data.csv', 'r') as rows:
     csv_reader = csv.reader(rows)
+    logging.info('Opened csv for reading')
     for row in csv_reader:
         if row[0] in patients:
             logging.info('Patient added')
