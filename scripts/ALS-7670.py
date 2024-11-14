@@ -25,7 +25,7 @@ logging.info('Mapped %s uuids', len(patients))
 
 logging.info('Making pat_num list')
 pat_nums = []
-for p in patients.values():
+for p in patients.keys():
     pat_nums.append(p.strip())
 
 logging.info('Connecting to snowflake')
