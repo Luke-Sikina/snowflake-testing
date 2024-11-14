@@ -11,7 +11,7 @@ with open('../../bch_phenotypic_data.csv', 'r') as rows:
     csv_reader = csv.reader(rows)
     logging.info('Opened csv for reading')
     for row in csv_reader:
-        if row[0] in patients:
+        if row[0] not in patients:
             logging.info('Patient added')
             patients.add(row[0])
 
