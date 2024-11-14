@@ -1,5 +1,7 @@
 # Take all the patient UUIDs and translate them into patient nums
 import logging
+import os
+import csv
 
 logging.basicConfig(filename='ALS-7670.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -47,6 +49,7 @@ query = f.read()
 
 logging.info('Running query')
 with open('ALS-7670.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
     try:
         cur = conn.cursor()
         cur.execute(query, [patients.values()])
@@ -55,7 +58,7 @@ with open('ALS-7670.csv', 'w', newline='') as file:
         while len(results) > 0:
             for row in results:
                 row = row.append(patients[row[0]])
-                file.write(row)
+                writer.write(row)
     finally:
         conn.close()
 
