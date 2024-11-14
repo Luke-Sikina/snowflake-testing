@@ -23,6 +23,11 @@ with open('../../UUID_mapping_07Jan2024.csv') as mapping:
             logging.info('Added patient mapping %s: %s', cells[1], cells[2])
 logging.info('Mapped %s uuids', len(patients))
 
+logging.info('Making pat_num list')
+pat_nums = []
+for p in patients.values():
+    pat_nums.append(p.strip())
+
 logging.info('Connecting to snowflake')
 account = 'ita05443.us-east-1'
 host='ita05443.us-east-1.snowflakecomputing.com'
@@ -53,7 +58,7 @@ with open('ALS-7670.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     try:
         cur = conn.cursor()
-        cur.execute(query, [patients.values()])
+        cur.execute(query, [pat_nums])
         results = cur.fetchmany(1000)
         logging.info('Writing results')
         while len(results) > 0:
@@ -64,4 +69,3 @@ with open('ALS-7670.csv', 'w', newline='') as file:
         conn.close()
 
 logging.info('Done')
-
