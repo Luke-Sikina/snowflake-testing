@@ -57,6 +57,7 @@ try:
                 logging.info('1000 patients starting at {patient_count}, found {num_results}'.format(patient_count=patient_count, num_results=num_results))
             except:
                 logging.info("Error on patient %s", patient_count)
+                logging.exception("message")
             finally:
                 # Close the cursor and connection
                 cur.close()
