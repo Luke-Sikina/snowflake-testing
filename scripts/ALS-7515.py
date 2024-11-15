@@ -7,7 +7,7 @@ def split_into_sublists(lst, n):
     return [lst[i:i + n] for i in range(0, len(lst), n)]
 
 # Configure the logger
-logging.basicConfig(filename='my_log.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='ALS-7515.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Snowflake connection parameters
 account = 'ita05443.us-east-1'
