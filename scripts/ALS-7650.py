@@ -41,7 +41,7 @@ try:
         writer = csv.writer(file)
 
         num_results = -1
-        patient_count = 61000
+        patient_count = 0
         while num_results != 0:
             # Execute a simple query
             cur = conn.cursor()
