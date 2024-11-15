@@ -56,6 +56,7 @@ query = f.read()
 logging.info('Running query')
 with open('ALS-7670.csv', 'w', newline='') as file:
     writer = csv.writer(file)
+    writer.writerow(['UUID','PATIENT_NUM','CONCEPT_CD','TVAL_CHAR','NVAL_NUM','START_DATE'])
     try:
         cur = conn.cursor()
         cur.execute(query, [pat_nums])
@@ -63,7 +64,7 @@ with open('ALS-7670.csv', 'w', newline='') as file:
         logging.info('Writing results')
         while len(results) > 0:
             for row in results:
-                csv_row = [patients[row[0]], row[0], row[1], row[2], row[3], row[0]]
+                csv_row = [patients[row[0]], row[0], row[1], row[2], row[3], row[4]]
                 writer.writerow(csv_row)
                 results = cur.fetchmany(1000)
     finally:
