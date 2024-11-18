@@ -12,10 +12,10 @@ with open('../../inactive_patnums.txt', 'r') as inactives:
         patient_nums_to_omit.add(patnum.strip())
 
 logging.info('Pulled {s} inactives'.format(s=len(patient_nums_to_omit)))
-with open('ALS-7650.csv', 'w', newline='') as file:
+with open('bch_data_oct2024_6mos.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     logging.info('filtering bch_data_oct2024.csv')
-    with open('bch_data_oct2024.csv', 'r') as file:
+    with open('ALS-7650.csv', 'r') as file:
         csv_reader = csv.reader(file)
         for cells in csv_reader:
             if cells[0] in patient_nums_to_omit:
